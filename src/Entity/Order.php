@@ -6,26 +6,53 @@ use App\Repository\OrderRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\GetCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Metadata\ApiProperty;
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
 #[ORM\Table(name: '`order`')]
+#[ApiResource(
+    operations: [
+        new Get(),
+        new Post(),
+        new Put(),
+        new Patch(),
+        new Delete(),
+        new GetCollection(normalizationContext: ['groups' => ['read:orders']]),
+
+    ],
+    normalizationContext: ['groups' => ['read:order']],
+)]
 class Order
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(['read:lineOrder', 'read:lineOrders', 'read:order', 'read:orders'])]
     private $id;
 
     #[ORM\Column(type: 'datetime')]
+    #[Groups(['read:lineOrder', 'read:lineOrders', 'read:order', 'read:orders'])]
     private $datetime;
 
     #[ORM\Column(type: 'float')]
+    #[Groups(['read:lineOrder', 'read:lineOrders', 'read:order', 'read:orders'])]
     private $total;
 
     #[ORM\OneToMany(mappedBy: 'order_associated', targetEntity: LineOrder::class, cascade: ["persist"])]
+    #[Groups(['read:order', 'read:orders'])]
+    #[ApiProperty(readableLink: true, writableLink: true)]
     private $lineOrders;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['read:lineOrder', 'read:lineOrders', 'read:order', 'read:orders'])]
     private $status;
 
     public function __construct()
@@ -62,7 +89,7 @@ class Order
         return $this;
     }
 
-  
+
     /**
      * @return Collection|LineOrder[]
      */

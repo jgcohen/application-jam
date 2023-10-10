@@ -6,30 +6,59 @@ use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\GetCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Metadata\ApiProperty;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
+#[ApiResource(
+    operations: [
+        new Get(),
+        new Post(),
+        new Put(),
+        new Patch(),
+        new Delete(),
+        new GetCollection(normalizationContext: ['groups' => ['read:products']]),
+
+    ],
+    normalizationContext: ['groups' => ['read:product']],
+)]
 class Product
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(['read:product', 'read:products', 'read:categories', 'read:category','read:lineOrder', 'read:lineOrders', 'read:order', 'read:orders'])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['read:product', 'read:products', 'read:categories', 'read:category','read:lineOrder', 'read:lineOrders', 'read:order', 'read:orders'])]
     private $name;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['read:product', 'read:products', 'read:categories', 'read:category','read:lineOrder', 'read:lineOrders', 'read:order', 'read:orders'])]
     private $description;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['read:product', 'read:products', 'read:categories', 'read:category','read:lineOrder', 'read:lineOrders', 'read:order', 'read:orders'])]
     private $image;
 
     #[ORM\Column(type: 'integer')]
+    #[Groups(['read:product', 'read:products', 'read:categories', 'read:category','read:lineOrder', 'read:lineOrders', 'read:order', 'read:orders'])]
     private $price;
 
-    private int $quantity=0;
+    #[Groups(['read:product', 'read:products', 'read:categories', 'read:category','read:lineOrder', 'read:lineOrders', 'read:order', 'read:orders'])]
+    private int $quantity = 0;
 
     #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'products')]
+    #[Groups(['read:product', 'read:products','read:lineOrder', 'read:lineOrders', 'read:order', 'read:orders'])]
+    #[ApiProperty(readableLink: true, writableLink: true)]
     private $categories;
 
     public function __construct()
@@ -49,7 +78,7 @@ class Product
 
     public function getFullName(): ?string
     {
-        return $this->name." - ".$this->price;
+        return $this->name . " - " . $this->price;
     }
     public function setName(string $name): self
     {
@@ -127,11 +156,12 @@ class Product
     {
         $this->categories->removeElement($category);
 
-        
+
         return $this;
     }
 
-    public function __toString(){
+    public function __toString()
+    {
         return $this->name;
     }
 }

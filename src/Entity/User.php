@@ -7,20 +7,43 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\GetCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ApiResource(
+    operations: [
+        new Get(),
+        new Post(),
+        new Put(),
+        new Patch(),
+        new Delete(),
+        new GetCollection(normalizationContext: ['groups' => ['read:users']]),
+
+    ],
+    normalizationContext: ['groups' => ['read:user']],
+)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['read:user', 'read:users'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Groups(['read:user', 'read:users'])]
     private ?string $email = null;
 
     #[ORM\Column]
+    #[Groups(['read:user', 'read:users'])]
     private array $roles = [];
 
     /**

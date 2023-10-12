@@ -2,21 +2,21 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Category;
+use App\Entity\Flavor;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-
+use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 
-class CategoryCrudController extends AbstractCrudController
+class FlavorCrudController extends AbstractCrudController
 {
     
     public static function getEntityFqcn(): string
     {
-        return Category::class;
+        return Flavor::class;
     }
 
 
@@ -24,9 +24,6 @@ class CategoryCrudController extends AbstractCrudController
     {
         return [
             TextField::new('name'),
-            TextareaField::new('description', 'Description')
-                ->setFormType(CKEditorType::class),
-            SlugField::new('slug')->setTargetFieldName('name')
         ];
     }
     

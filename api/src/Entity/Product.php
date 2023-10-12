@@ -61,9 +61,15 @@ class Product
     #[ApiProperty(readableLink: true, writableLink: true)]
     private $categories;
 
+    #[ORM\ManyToMany(targetEntity: Flavor::class, inversedBy: 'products')]
+    #[Groups(['read:product', 'read:products'] )]
+    #[ApiProperty(readableLink: true, writableLink: true)]
+    private Collection $flavors;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
+        $this->flavors = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -163,5 +169,29 @@ class Product
     public function __toString()
     {
         return $this->name;
+    }
+
+    /**
+     * @return Collection<int, Flavor>
+     */
+    public function getFlavors(): Collection
+    {
+        return $this->flavors;
+    }
+
+    public function addFlavor(Flavor $flavor): static
+    {
+        if (!$this->flavors->contains($flavor)) {
+            $this->flavors->add($flavor);
+        }
+
+        return $this;
+    }
+
+    public function removeFlavor(Flavor $flavor): static
+    {
+        $this->flavors->removeElement($flavor);
+
+        return $this;
     }
 }

@@ -18,6 +18,30 @@ const CartPage = () => {
         console.log('Restoring cart from localStorage:', JSON.parse(savedCart));
     }
 }, []);
+const fetchCheckoutSession = async () => {
+  fetch('http://localhost:8000/checkout', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ cart })
+  }).then(async response => {
+    if (response.ok) {
+        const session = await response.json();
+        console.log(session);
+        
+        window.location.href = session.url;
+    } else {
+        console.error('Failed to create checkout session:', response.statusText);
+    }
+
+  }
+  
+  )
+};
+const handleCheckout = async () => {
+  await fetchCheckoutSession();
+};
 return (
   <div className="container">
     <h1 className="text-center my-4">Panier</h1>
@@ -50,7 +74,8 @@ return (
             <h5 className="text-uppercase">Total</h5>
             <h5>€{(total / 100).toFixed(2)}</h5>
           </div>
-          <a href="/checkout" className="btn btn-dark">VALIDER LE PANIER</a>
+          <button onClick={handleCheckout} className="btn btn-dark">VALIDER LE PANIER</button>
+
         </div>
       </div>
     ) : (

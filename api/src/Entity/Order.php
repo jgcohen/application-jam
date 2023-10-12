@@ -15,13 +15,19 @@ use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\GetCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Metadata\ApiProperty;
+use App\Controller\CheckoutController;
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
 #[ORM\Table(name: '`order`')]
 #[ApiResource(
     operations: [
         new Get(),
-        new Post(),
+        new Post(
+            name: 'checkout',
+            uriTemplate: '/checkout',
+            controller: CheckoutController::class,
+            stateless: false,
+        ),
         new Put(),
         new Patch(),
         new Delete(),

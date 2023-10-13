@@ -12,7 +12,7 @@ interface CartItem {
     setCart: React.Dispatch<React.SetStateAction<Cart>>;
   }
   
-  export const CartContext = createContext<CartContextProps | undefined>(undefined);
+  export const CartContext = createContext<CartContextProps>({ cart: [], setCart: () => {} });
   
   interface CartProviderProps {
     children: ReactNode;

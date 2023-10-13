@@ -7,6 +7,7 @@ import NavBar from './components/NavBar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CheckoutError from './pages/CheckoutError';
 import CheckoutSuccess from './pages/CheckoutSucces';
+import Footer from './components/Footer';
 
 
 
@@ -20,6 +21,7 @@ function App() {
           <Route path="/checkout_error" element={<CheckoutError />} />
           <Route path="/checkout_success" element={<CheckoutSuccess />} />
         </Routes>
+        <Footer />
       </Router>
   );
 }

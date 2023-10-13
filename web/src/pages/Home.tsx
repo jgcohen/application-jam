@@ -110,12 +110,7 @@ const Home = () => {
             console.log('Cart is empty, not updating localStorage');
         }
     }, [cart]);
-    
-    useEffect(() => {
-      console.log(products);
-      console.log(flavors);
-
-    }, [products, flavors]);
+  
       
     const fetchWhoAmI = async () => {
       try {
@@ -139,7 +134,6 @@ const Home = () => {
     if (existingProductIndex >= 0) {
         const newCart = [...cart];
         newCart[existingProductIndex].quantity = quantity;  
-        console.log('setCart', newCart);
         
         setCart(newCart); 
 
@@ -209,11 +203,11 @@ const Home = () => {
   };
   return (
     <div className="container mt-5">
-      <button onClick={fetchWhoAmI} className="btn btn-primary my-2">
+      {/* <button onClick={fetchWhoAmI} className="btn btn-primary my-2">
             Fetch WhoAmI
-          </button>
+          </button> */}
       <div className="row">
-        <div className="col-4">
+      <div className="col-md-4 col-lg-3">
         <input 
         type="text" 
         value={searchTerm} 
@@ -270,26 +264,26 @@ const Home = () => {
               </div>
             ))}
         </div>
-        <div className="col-8">
+        <div className="col-md-8 col-lg-9">
           <div className="row">
             {filteredProducts?.map(product => (
-              <div key={product.id} className="m-2 col-3 card">
-                <img src={`uploads/${product.image}`} alt={product.name} className="p-4 card-img-top" />
-                <div className="card-body d-flex flex-column justify-content-between">
-                  <h5 className="card-title">{product.name}</h5>
-                  <p className="card-text">{ (product.price / 100).toFixed(2) } €</p>
-                  <div className="row">
-                    <div className="col">
-                      <input type="number" defaultValue="1" min="1" id={`quantity-${product.id}`} className="form-control" />
-                      <button
-    onClick={() => handleCart(product, Number(document.getElementById(`quantity-${product.id}`)?.value))}
-    className="mt-2 btn btn-dark">
-    {cart.find(cartItem => cartItem.product.id === product.id) ? 'Modifier' : 'Ajouter'}
-</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <div key={product.id} className="m-2 col-12 col-sm-6 col-md-4 col-lg-3 card">
+    <img src={`uploads/${product.image}`} alt={product.name} className="p-4 card-img-top" />
+    <div className="card-body d-flex flex-column justify-content-between">
+        <h5 className="card-title">{product.name}</h5>
+        <p className="card-text">{ (product.price / 100).toFixed(2) } €</p>
+        <div className="row">
+            <div className="col">
+                <input type="number" defaultValue="1" min="1" id={`quantity-${product.id}`} className="form-control" />
+                <button
+                    onClick={() => handleCart(product, Number(document.getElementById(`quantity-${product.id}`)?.value))}
+                    className="mt-2 btn btn-dark w-100">
+                    {cart.find(cartItem => cartItem.product.id === product.id) ? 'Modifier' : 'Ajouter'}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
             ))}
           </div>
         </div>

@@ -28,7 +28,6 @@ const fetchCheckoutSession = async () => {
   }).then(async response => {
     if (response.ok) {
         const session = await response.json();
-        console.log(session);
         
         window.location.href = session.url;
     } else {

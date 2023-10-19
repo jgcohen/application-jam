@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import CheckoutError from './pages/CheckoutError';
 import CheckoutSuccess from './pages/CheckoutSucces';
 import Footer from './components/Footer';
+import InitialisationSession from './pages/InitialisationSession';
 
 
 
@@ -20,6 +21,7 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout_error" element={<CheckoutError />} />
           <Route path="/checkout_success" element={<CheckoutSuccess />} />
+          <Route path="/initialisationSession" element={<InitialisationSession />} />
         </Routes>
         <Footer />
       </Router>

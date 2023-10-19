@@ -16,13 +16,20 @@ const NavBar = () => {
   }
   
 
-  const { isLoggedIn } = useContext(SessionContext);
+  const { user,setUser } = useContext(SessionContext);
   const { cart } = useContext(CartContext);
 
   const handleLogout = async () => {
+    setUser(null)
       window.location.href = 'http://127.0.0.1:8000/logout';
   };
+
   
+  useEffect(() => {
+    console.log(user);
+    }, [user]);
+    
+
   const totalItemsInCart = cart.reduce((total, cartItem) => total + cartItem.quantity, 0);
 
   return (
@@ -43,13 +50,13 @@ const NavBar = () => {
                       </Link> 
                   </li>
                   <li className="nav-item">
-                      {!isLoggedIn ? (
+                      {!user ? (
                           <a className="nav-link" href="http://127.0.0.1:8000/login" target="_blank" rel="noopener noreferrer">
                               Login
                           </a>
                       ) : (
                           <a className="nav-link" onClick={handleLogout} style={{ cursor: 'pointer' }}>
-                              Logout
+                              Logout ({user.email})
                           </a>
                       )}
                   </li>

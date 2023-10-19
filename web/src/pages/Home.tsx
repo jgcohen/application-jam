@@ -112,19 +112,19 @@ const Home = () => {
     }, [cart]);
   
       
-    const fetchWhoAmI = async () => {
-      try {
-        const response = await fetch('http://127.0.0.1:8000/whoami', {credentials: 'include'});
-        if (response.ok) {
-          const data = await response.json();
-          console.log('WhoAmI response:', data);
-        } else {
-          console.error('Failed to fetch whoami:', response.statusText);
-        }
-      } catch (error) {
-        console.error('Error fetching whoami:', error);
-      }
-    };
+    // const fetchWhoAmI = async () => {
+    //   try {
+    //     const response = await fetch('http://127.0.0.1:8000/whoami', {credentials: 'include'});
+    //     if (response.ok) {
+    //       const data = await response.json();
+    //       console.log('WhoAmI response:', data);
+    //     } else {
+    //       console.error('Failed to fetch whoami:', response.statusText);
+    //     }
+    //   } catch (error) {
+    //     console.error('Error fetching whoami:', error);
+    //   }
+    // };
   const handleFilterChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
     setFilter(event.target.value);
   };
@@ -203,9 +203,9 @@ const Home = () => {
   };
   return (
     <div className="container mt-5">
-      <button onClick={fetchWhoAmI} className="btn btn-primary my-2">
+      {/* <button onClick={fetchWhoAmI} className="btn btn-primary my-2">
             Fetch WhoAmI
-          </button>
+          </button> */}
       <div className="row">
       <div className="col-md-4 col-lg-3">
         <input 

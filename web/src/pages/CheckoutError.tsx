@@ -4,7 +4,7 @@ const CheckoutError = () => {
 
     return (
         <div>
-        <h1>Checkout Error</h1>
+        <h1> Une erreur est survenue lors de votre achat ! </h1>
         </div>
     );
     };

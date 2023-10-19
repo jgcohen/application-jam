@@ -12,11 +12,11 @@ security:
             form_login:
                 login_path: login
                 check_path: login
-                default_target_path: redirect_to_client
+                default_target_path: login
 
             logout:
                 path: logout
-                target: redirect_to_client
+                target: logout
 
     password_hashers:
         App\Entity\User:

@@ -203,9 +203,9 @@ const Home = () => {
   };
   return (
     <div className="container mt-5">
-      {/* <button onClick={fetchWhoAmI} className="btn btn-primary my-2">
+      <button onClick={fetchWhoAmI} className="btn btn-primary my-2">
             Fetch WhoAmI
-          </button> */}
+          </button>
       <div className="row">
       <div className="col-md-4 col-lg-3">
         <input 

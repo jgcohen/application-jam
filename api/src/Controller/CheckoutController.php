@@ -103,7 +103,7 @@ class CheckoutController extends AbstractController
     public function __invoke(Request $request, EntityManagerInterface $manager, ProductRepository $productRepo, SessionInterface $session)
     {
         $tokenProvider = $this->container->get('security.csrf.token_manager');
-        $token = $tokenProvider->getToken('stripe_token')->getValue();
+        // $token = $tokenProvider->getToken('stripe_token')->getValue();
         $cart = json_decode($request->getContent(), true)['cart'];
         if (empty($cart)) {
             return $this->redirectToRoute("home");
@@ -146,7 +146,7 @@ class CheckoutController extends AbstractController
         $session = \Stripe\Checkout\Session::create([
             'line_items' => $stripe_items,
             'mode' => 'payment',
-            'success_url' => 'http://localhost:5173/checkout_success/' . $token,
+            'success_url' => 'http://localhost:5173/checkout_success' ,
             'cancel_url' => 'http://localhost:5173/checkout_error'
         ]);
         return new JsonResponse(['url' => $session->url]);

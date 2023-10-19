@@ -18,10 +18,10 @@ class LoginController extends AbstractController
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
     
-        if ($security->getUser()) {
-            error_log('User is logged in, redirecting...');
-            return new RedirectResponse('http://localhost:5173');
-        }
+        // if ($security->getUser()) {
+        //     error_log('User is logged in, redirecting...');
+        //     return new RedirectResponse('http://localhost:5173');
+        // }
         return $this->render('login/index.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,
